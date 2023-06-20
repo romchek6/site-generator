@@ -7,6 +7,7 @@ use App\Services\IndexGenerator\IndexService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Storage;
 
 class GenerateController extends BaseController
 {
@@ -14,19 +15,20 @@ class GenerateController extends BaseController
     public $fileService;
     public $indexService;
 
-    public function __construct(FileService $fileService, IndexService $indexService){
-        $this->fileService = $fileService;
-        $this->indexService = $indexService;
-    }
-
     public function generate(){
 
 //        echo '<pre>';
 //        dd($_POST);
 //        echo '</pre>';
 
-        echo $this->indexService->indexConstruct($_POST, $_FILES);
+        $this->fileService = new FileService($_FILES);
+        $this->indexService = new IndexService($_POST, $_FILES);
 
+        $index = $this->indexService->indexConstruct();
+        $this->fileService->createIndex($index);
+
+        $path = Storage::disk('local')->path('public/generated-site.zip');
+        return response()->download($path, basename($path));
 
     }
 

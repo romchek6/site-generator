@@ -11,6 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     @vite(['resources/js/app.js'])
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
 <body>
 <header>
@@ -65,7 +69,7 @@
                         <div class="input-block">
                             <label for="text">Текст</label>
                             <div class="input">
-                                <textarea name="text" id="text"></textarea>
+                                <textarea class="text-editor"  name="text" id="text"></textarea>
                             </div>
                         </div>
                     </div>
@@ -105,17 +109,17 @@
                         <div class="input-block">
                             <label for="text2">Текст</label>
                             <div class="input">
-                                <textarea name="text2" id="text2"></textarea>
+                                <textarea class="text-editor" name="text2" id="text2"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="block sortable" id="data-table-block">
                     <input type="hidden" name="data_table_block">
-                    <div class="block-title">Таблица с компаниями</div>
+                    <div class="block-title">Таблица с данными</div>
                     <div class="table">
-                        <div class="header-table">Название компании</div>
-                        <div class="header-table">Рейтинг</div>
+                        <div class="header-table">Название</div>
+                        <div class="header-table">Описание</div>
                         <input type="text" class="cell" name="name-data-company[]">
                         <textarea class="cell" style="height: 32px" name="value-data-company[]"></textarea>
                     </div>
@@ -190,12 +194,6 @@
                         Города записываются через раздилитель (Город_1)|(Город_2)|(Город_3)
                     </div>
                     <div class="input-block">
-                        <label for="region-title">Заголовок</label>
-                        <div class="input">
-                            <input type="text" name="region-title" id="region-title">
-                        </div>
-                    </div>
-                    <div class="input-block">
                         <div class="input">
                             <textarea name="regions" id="regions"></textarea>
                         </div>
@@ -206,12 +204,6 @@
                     <div class="block-title">Видео</div>
                     <div class="text-about">
                         Ссылка на видео в форматe https://www.youtube.com/watch?v=xRModWEEuE8
-                    </div>
-                    <div class="input-block">
-                        <label for="video-title">Заголовок</label>
-                        <div class="input">
-                            <input type="text" name="video-title" id="video-title">
-                        </div>
                     </div>
                     <div class="video-table">
                         <div class="video-item" data-video="1">
@@ -270,26 +262,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="block sortable" id="seo-block">
+                <div class="block" id="seo-block">
                     <input type="hidden" name="seo_block">
                     <div class="block-title">SEO блок</div>
                     <div class="inputs">
                         <div class="input-block">
                             <label for="seo">Текст</label>
                             <div class="input">
-                                <textarea style="min-height: 250px" name="seo" id="seo"></textarea>
+                                <textarea class="text-editor" style="min-height: 250px" name="seo" id="seo"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="right">
-                <iframe id="frame" src="/test">
-
-                </iframe>
                 <button type="submit" class="submit">Получить архив</button>
             </div>
         </div>
+
         </form>
     </div>
 </div>

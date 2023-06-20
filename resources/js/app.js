@@ -8,33 +8,37 @@ $( function() {
     });
 });
 
-// $('form').on('submit', function (e){
-//     e.preventDefault();
-//
-//     var form = new FormData($(this)[0]);
-//     for(var i = 0; i < $('#img').get(0).files.length;i++){
-//         form.append('gallery[]', $('#img').get(0).files[i])
-//     }
-//     $('.product-img-input').each(function (){
-//         form.append('product[]', $(this)[0].files[0]);
-//     });
-//     $('.reviews-logo-input').each(function (){
-//         form.append('reviews[]', $(this)[0].files[0]);
-//     });
-//
-//     $.ajax({
-//         type: 'POST',
-//         url: '/generate',
-//         cache: false,
-//         processData: false,
-//         contentType: false,
-//         data: form,
-//     }).done(function(data) {
-//         console.log(data);
-//     }).fail(function(data) {
-//         console.log(data);
-//     });
-// });
+$(document).ready(function() {
+    $('.text-editor').summernote();
+});
+
+$('form').on('submit', function (e){
+    e.preventDefault();
+
+    var form = new FormData($(this)[0]);
+    for(var i = 0; i < $('#img').get(0).files.length;i++){
+        form.append('gallery[]', $('#img').get(0).files[i])
+    }
+    $('.product-img-input').each(function (){
+        form.append('product[]', $(this)[0].files[0]);
+    });
+    $('.reviews-logo-input').each(function (){
+        form.append('reviews[]', $(this)[0].files[0]);
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '/generate',
+        cache: false,
+        processData: false,
+        contentType: false,
+        data: form,
+    }).done(function(data) {
+        console.log(data);
+    }).fail(function(data) {
+        console.log(data);
+    });
+});
 
 $(document).ready(function() {
     $('form').keydown(function(event){
@@ -271,7 +275,7 @@ function attribute_add(x)
     $('#video-block .video-item[data-video="1"] input').on('blur', function (){
        let block = $('#video-block .video-item[data-video="1"] .video-img');
        block.empty();
-       block.append('<img src="//img.youtube.com/vi/' + $(this).val().split('?v=')[1] + '/maxresdefault.jpg">')
+       block.append('<img src="https://i.ytimg.com/vi/' + $(this).val().split('?v=')[1] + '/hqdefault.jpg">')
     })
 
     let add = $('#video-block .add-video'),
@@ -293,7 +297,7 @@ function attribute_add(x)
         $('#video-block .video-item[data-video="' + (count + 1) + '"] input').on('blur', function (){
             let block = $('.video-item[data-video="' + (count + 1) + '"] .video-img');
             block.empty();
-            block.append('<img src="//img.youtube.com/vi/' + $(this).val().split('?v=')[1] + '/maxresdefault.jpg">')
+            block.append('<img src="https://i.ytimg.com/vi/' + $(this).val().split('?v=')[1] + '/hqdefault.jpg">')
         });
         if(remove.hasClass('disabled')){
             remove.removeClass('disabled');
