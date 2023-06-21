@@ -41,8 +41,4 @@ class FileService
         }
     }
 
-    public function downloadImage(){
-
-    }
-
 }

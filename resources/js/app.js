@@ -12,33 +12,33 @@ $(document).ready(function() {
     $('.text-editor').summernote();
 });
 
-$('form').on('submit', function (e){
-    e.preventDefault();
-
-    var form = new FormData($(this)[0]);
-    for(var i = 0; i < $('#img').get(0).files.length;i++){
-        form.append('gallery[]', $('#img').get(0).files[i])
-    }
-    $('.product-img-input').each(function (){
-        form.append('product[]', $(this)[0].files[0]);
-    });
-    $('.reviews-logo-input').each(function (){
-        form.append('reviews[]', $(this)[0].files[0]);
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: '/generate',
-        cache: false,
-        processData: false,
-        contentType: false,
-        data: form,
-    }).done(function(data) {
-        console.log(data);
-    }).fail(function(data) {
-        console.log(data);
-    });
-});
+// $('form').on('submit', function (e){
+//     e.preventDefault();
+//
+//     var form = new FormData($(this)[0]);
+//     for(var i = 0; i < $('#img').get(0).files.length;i++){
+//         form.append('gallery[]', $('#img').get(0).files[i])
+//     }
+//     $('.product-img-input').each(function (){
+//         form.append('product[]', $(this)[0].files[0]);
+//     });
+//     $('.reviews-logo-input').each(function (){
+//         form.append('reviews[]', $(this)[0].files[0]);
+//     });
+//
+//     $.ajax({
+//         type: 'POST',
+//         url: '/generate',
+//         cache: false,
+//         processData: false,
+//         contentType: false,
+//         data: form,
+//     }).done(function(data) {
+//         console.log(data);
+//     }).fail(function(data) {
+//         console.log(data);
+//     });
+// });
 
 $(document).ready(function() {
     $('form').keydown(function(event){
@@ -156,7 +156,7 @@ function attribute_add(x)
     if(count_attribute === 3) $(x).addClass('disabled')
     let table = $('.product-item[data-number='+ number +'] .attribute-wrap');
     let remove = $('.product-item[data-number='+ number +'] .remove-attribute');
-    table.append('<input type="text" name="product-attribute[product-'+ number +']">');
+    table.append('<input type="text" name="product-attribute[product-'+ number +'][]">');
     if(remove.hasClass('disabled')){
         remove.removeClass('disabled');
     }
@@ -213,7 +213,7 @@ function attribute_add(x)
             '                            <div class="product-attribute">\n' +
             '                                <div class="input-name">Характеристики</div>\n' +
             '                                <div class="attribute-wrap" >\n' +
-            '                                    <input type="text" name="product-attribute[product-' +(count + 1) + ']">\n' +
+            '                                    <input type="text" name="product-attribute[product-' +(count + 1) + '][]">\n' +
             '                                </div>\n' +
             '                                <div class="add-row">\n' +
             '                                    <div class="add add-attribute">+</div>\n' +
@@ -269,6 +269,30 @@ function attribute_add(x)
             remove.addClass('disabled');
         }
     });
+})();
+
+(function breadcrumbs(){
+    $('#head-block .add').click(function (){
+        $('.breadcrumbs-wrap').append('<div class="input breadcrumbs-item">\n' +
+            '                                <input name="breadcrumbs[]" id="breadcrumbs">\n' +
+            '                            </div>');
+        if($('#head-block .remove').hasClass('disabled')){
+            $('#head-block .remove').removeClass('disabled');
+        }
+        if($('.breadcrumbs-item').length > 4){
+            $('#head-block .add').addClass('disabled');
+        }
+    });
+    $('#head-block .remove').click(function (){
+        $('.breadcrumbs-item:last-child').remove();
+        if($('#head-block .add').hasClass('disabled')){
+            $('#head-block .add').removeClass('disabled');
+        }
+        if($('.breadcrumbs-item').length == 1){
+            $('#head-block .remove').addClass('disabled');
+        }
+    });
+
 })();
 
 (function video_block(){

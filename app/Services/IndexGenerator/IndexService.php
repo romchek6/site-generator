@@ -12,6 +12,10 @@ class IndexService
 
     public function __construct($Post , $Files){
 
+        Storage::disk('public')->deleteDirectory('site/images');
+        Storage::disk('public')->delete('generated-site.zip');
+        Storage::disk('public')->delete('site/images.zip');
+
         $blockArray = [
             'text_block',
             'company_table_block',
@@ -19,10 +23,10 @@ class IndexService
             'text2_block',
             'data_table_block',
             'faq_block',
-//            'product_block',
+            'product_block',
             'regions_block',
             'video_block',
-//            'reviews_block',
+            'reviews_block',
             'seo_block'
         ];
 
@@ -81,10 +85,8 @@ class IndexService
 
     private function breadcrumbs(){
 
-        if($this->post['breadcrumbs'] == '') return;
-
-        $breadcrumbsArray = explode('|', $this->post['breadcrumbs']);
-        $count = count($breadcrumbsArray);
+        if($this->post['breadcrumbs'][0] == '') return;
+        $count = count($this->post['breadcrumbs']);
         $string = '';
         $hrefArr = [
                 '/',
@@ -95,7 +97,7 @@ class IndexService
                 '/#h1_5',
                 '/#h1_6',
         ];
-        foreach($breadcrumbsArray as $key => $item){
+        foreach($this->post['breadcrumbs'] as $key => $item){
 
             $string .= '{
                 "@type": "ListItem",
@@ -171,7 +173,12 @@ class IndexService
         foreach ($this->post['title-company'] as $key => $value){
 
             $this->index .= '<div class="row">
-                    <div class="column w-33">' . $value . '</div>
+                    <div itemprop="aggregateRating" itemtype="https://schema.org/AggregateRating" itemscope>
+                    <meta itemprop="reviewCount" content="98" />
+                    <meta itemprop="ratingValue" content="' . $this->post['rating-company'][$key] . '" />
+                    <meta itemprop="bestRating" content="100" />
+                    <meta itemprop="worstRating" content="1" />
+                    <div class="column w-33" itemprop="name">' . $value . '</div>
                     <div class="column w-33">
                         <div class="rating">
                             <div class="rating__body">
@@ -252,7 +259,90 @@ class IndexService
         $this->index .= '</div>' . "\r\n";
     }
     private function gallery_block(){
-        return;
+        if(empty($this->files['img']['name'][0])) return;
+        $this->index .= '<div id="h1_3"  class="gallery block">' . "\r\n";
+        foreach ($this->files['img']['name'] as $key => $value){
+            Storage::disk('public')->put('site/images/' . basename($value), file_get_contents($this->files['img']['tmp_name'][$key]));
+            $this->index .= '<div class="img">
+                                <img src="/images/' . $value . '" alt="">
+                             </div>' . "\r\n";
+        }
+        $this->index .= '</div>' . "\r\n";
+    }
+    private function reviews_block(){
+        if(empty($this->post['reviews-name'][0])) return;
+        $this->index .= '<div class="reviews block">
+            <div class="wrap">' . "\r\n";
+        foreach ($this->post['reviews-name'] as $key => $value){
+
+            Storage::disk('public')->put('site/images/' . basename($this->files['reviews-img']['name'][$key]), file_get_contents($this->files['reviews-img']['tmp_name'][$key]));
+
+            $link = explode('|' , $value);
+            $this->index .= '<div class="item">
+                    <div class="info">
+                        <div class="img">
+                            <img src="/images/' . $this->files['reviews-img']['name'][$key] . '" alt="">
+                        </div>
+                        <div class="info2">
+                            <div class="title"><a href="' . (isset($link[1])?$link[1]:'') . '">' . $link[0] . '</a></div>
+                            <div class="rating">
+                                <div class="rating__body">
+                                    <div class="rating__active" style="width: ' . $this->post['reviews-rating'][$key] . '%"></div>
+                                    <div class="rating__items">
+                                        <span class="rating__item"></span>
+                                        <span class="rating__item"></span>
+                                        <span class="rating__item"></span>
+                                        <span class="rating__item"></span>
+                                        <span class="rating__item"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="count">' . $this->post['count-reviews'][$key] . $this->sklonenie($this->post['count-reviews'][$key]) . '</div>
+                        </div>
+                    </div>
+                    <div class="text">' . $this->post['reviews-text'][$key] . '</div>
+                </div>' . "\r\n";
+        }
+        $this->index .= '</div>
+        </div>' . "\r\n";
+    }
+
+    private function product_block(){
+        if(empty($this->post['product-name'][0])) return;
+        $this->index .= '<div class="block product">
+            <div class="wrap">' . "\r\n";
+        foreach ($this->post['product-name'] as $key => $value){
+
+            Storage::disk('public')->put('site/images/' . basename($this->files['product-img']['name'][$key]), file_get_contents($this->files['product-img']['tmp_name'][$key]));
+
+            $link = explode('|' , $value);
+            $this->index .= '<div class="item">
+                    <div class="img">
+                        <img src="/images/' . $this->files['product-img']['name'][$key] . '" alt="">
+                    </div>
+                    <div class="title"><a href="' . (isset($link[1])?$link[1]:'') . '">' . $link[0] . '</a></div>
+                    <div class="attributes">' . "\r\n";
+
+                    foreach ($this->post['product-attribute']['product-'.$key + 1] as $item){
+                        $attr = explode('|' , $item);
+                        $this->index .= '<div class="attribute"><span>'. $attr[0] .':</span><span>'. $attr[1] .'</span></div>' . "\r\n";
+                    }
+
+
+            $this->index .= '</div>
+                    <div class="price">Цена: <b>'. $this->post['product-price'][$key] .'</b> руб</div>
+                </div>' . "\r\n";
+        }
+        $this->index .= '</div>
+        </div>' . "\r\n";
+    }
+
+    private function sklonenie($i)
+    {
+        $i = (int)$i;
+        if($i%10 == 1) return ' отзыв';
+        if($i%10 >1 && $i%10 < 5) return ' отзыва';
+        if($i%10 >= 5) return ' отзывов';
     }
 
 }

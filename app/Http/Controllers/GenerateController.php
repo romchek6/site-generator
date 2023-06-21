@@ -17,10 +17,6 @@ class GenerateController extends BaseController
 
     public function generate(){
 
-//        echo '<pre>';
-//        dd($_POST);
-//        echo '</pre>';
-
         $this->fileService = new FileService($_FILES);
         $this->indexService = new IndexService($_POST, $_FILES);
 

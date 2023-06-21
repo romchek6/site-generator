@@ -32,9 +32,6 @@
             <div class="left" id="sortable">
                 <div class="block" id="head-block">
                     <div class="block-title">Мета теги в &lt;head&gt;</div>
-                    <div class="text-about">
-                        Хлебные крошки (name_1)|(name_2)|(name_3)
-                    </div>
                     <div class="inputs">
                         <div class="input-block">
                             <label for="domain">Домен</label>
@@ -54,11 +51,15 @@
                                 <textarea name="description" id="description"></textarea>
                             </div>
                         </div>
-                        <div class="input-block">
+                        <div class="input-block breadcrumbs-wrap">
                             <label for="breadcrumbs">Хлебные крошки</label>
-                            <div class="input">
-                                <input name="breadcrumbs" id="breadcrumbs">
+                            <div class="input breadcrumbs-item">
+                                <input name="breadcrumbs[]" id="breadcrumbs">
                             </div>
+                        </div>
+                        <div class="add-row">
+                            <div class="add">+</div>
+                            <div class="remove disabled">-</div>
                         </div>
                     </div>
                 </div>
@@ -93,12 +94,6 @@
                 <div class="block sortable" id="gallery-block">
                     <input type="hidden" name="gallery_block">
                     <div class="block-title">Галлерея фото</div>
-                    <div class="input-block">
-                        <label for="title">Заголовок галлереи</label>
-                        <div class="input">
-                            <input type="text" name="gallery-title" id="gallery-title">
-                        </div>
-                    </div>
                     <input type="file" name="img[]" id="img" multiple accept="image/*" >
                     <div class="gallery"></div>
                 </div>
@@ -150,12 +145,6 @@
                         <br>
                         Если нужно добавить в название ссылку используй запись (НАЗВАНИЕ)|(ССЫЛКА)
                     </div>
-                    <div class="input-block">
-                        <label for="product-title">Заголовок</label>
-                        <div class="input">
-                            <input type="text" name="product-title" id="product-title">
-                        </div>
-                    </div>
                     <div class="product-table">
                         <div class="product-item" data-number="1">
                             <input type="file" name="product-img[]" class="product-img-input">
@@ -169,7 +158,7 @@
                             <div class="product-attribute">
                                 <div class="input-name">Характеристики</div>
                                 <div class="attribute-wrap">
-                                    <input type="text" name="product-attribute[product-1]">
+                                    <input type="text" name="product-attribute[product-1][]">
                                 </div>
                                 <div class="add-row">
                                     <div class="add add-attribute">+</div>
@@ -227,12 +216,6 @@
                     <div class="text-about">
                         Если нужно добавить в название ссылку используй запись (НАЗВАНИЕ)|(ССЫЛКА)
                     </div>
-                    <div class="input-block">
-                        <label for="reviews-title">Заголовок</label>
-                        <div class="input">
-                            <input type="text" name="reviews-title" id="reviews-title">
-                        </div>
-                    </div>
                     <div class="reviews-table">
                         <div class="reviews-item" data-number="1">
                             <input type="file" name="reviews-img[]" class="reviews-logo-input">
@@ -240,7 +223,7 @@
                                 <div class="delete-img"></div>
                             </div>
                             <div class="reviews-title input-block">
-                                <div class="input-name">Название</div>
+                                <div class="input-name">Название компании</div>
                                 <input type="text" name="reviews-name[]">
                             </div>
                             <div class="reviews-rating input-block">
