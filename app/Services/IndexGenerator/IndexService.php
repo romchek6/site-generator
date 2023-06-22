@@ -54,12 +54,18 @@ class IndexService
                 <html lang="en">
                 <head>
                     <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1">
                     <link rel="canonical"  href="' . $domain . '">
                     <meta http-equiv="X-UA-Compatible" content="ie=edge">
                     <title>' . $this->post['title'] . '</title>
                     <meta name="description" content="' . $this->post['description'] . '">
                     <link rel="stylesheet" href="/style.css">
                     <script src="/script.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+                    <link
+                      rel="stylesheet"
+                      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+                    />
                     <link rel="preconnect" href="https://fonts.googleapis.com">
                     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
                     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -174,10 +180,11 @@ class IndexService
 
             $this->index .= '<div class="row">
                     <div itemprop="aggregateRating" itemtype="https://schema.org/AggregateRating" itemscope>
-                    <meta itemprop="reviewCount" content="98" />
-                    <meta itemprop="ratingValue" content="' . $this->post['rating-company'][$key] . '" />
-                    <meta itemprop="bestRating" content="100" />
-                    <meta itemprop="worstRating" content="1" />
+                        <meta itemprop="reviewCount" content="98" />
+                        <meta itemprop="ratingValue" content="' . $this->post['rating-company'][$key] . '" />
+                        <meta itemprop="bestRating" content="100" />
+                        <meta itemprop="worstRating" content="1" />
+                    </div>
                     <div class="column w-33" itemprop="name">' . $value . '</div>
                     <div class="column w-33">
                         <div class="rating">
@@ -284,7 +291,7 @@ class IndexService
                             <img src="/images/' . $this->files['reviews-img']['name'][$key] . '" alt="">
                         </div>
                         <div class="info2">
-                            <div class="title"><a href="' . (isset($link[1])?$link[1]:'') . '">' . $link[0] . '</a></div>
+                            <div class="title"><a href="' . (isset($link[1])?$link[1]:'#') . '">' . $link[0] . '</a></div>
                             <div class="rating">
                                 <div class="rating__body">
                                     <div class="rating__active" style="width: ' . $this->post['reviews-rating'][$key] . '%"></div>
@@ -320,7 +327,7 @@ class IndexService
                     <div class="img">
                         <img src="/images/' . $this->files['product-img']['name'][$key] . '" alt="">
                     </div>
-                    <div class="title"><a href="' . (isset($link[1])?$link[1]:'') . '">' . $link[0] . '</a></div>
+                    <div class="title"><a href="' . (isset($link[1])?$link[1]:'#') . '">' . $link[0] . '</a></div>
                     <div class="attributes">' . "\r\n";
 
                     foreach ($this->post['product-attribute']['product-'.$key + 1] as $item){

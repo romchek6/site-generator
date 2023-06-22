@@ -48,7 +48,7 @@
                         <div class="input-block">
                             <label for="description">Description</label>
                             <div class="input">
-                                <textarea name="description" id="description"></textarea>
+                                <textarea class="text-editor" name="description" id="description"></textarea>
                             </div>
                         </div>
                         <div class="input-block breadcrumbs-wrap">
