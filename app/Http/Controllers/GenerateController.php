@@ -20,6 +20,11 @@ class GenerateController extends BaseController
         $this->fileService = new FileService($_FILES);
         $this->indexService = new IndexService($_POST, $_FILES);
 
+        Storage::disk('public')->deleteDirectory('site/images');
+        Storage::disk('public')->put('site/images/1.txt', 'images create');
+        Storage::disk('public')->delete('generated-site.zip');
+        Storage::disk('public')->delete('site/images.zip');
+
         $index = $this->indexService->indexConstruct();
         $this->fileService->createIndex($index);
 

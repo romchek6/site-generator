@@ -12,10 +12,6 @@ class IndexService
 
     public function __construct($Post , $Files){
 
-        Storage::disk('public')->deleteDirectory('site/images');
-        Storage::disk('public')->delete('generated-site.zip');
-        Storage::disk('public')->delete('site/images.zip');
-
         $blockArray = [
             'text_block',
             'company_table_block',
@@ -74,7 +70,7 @@ class IndexService
                 </head>
                 <body>
                 <div class="main-container">
-                    <h1 id="h1_1">Строительство домов в Москве</h1>' . "\r\n";
+                    <h1 id="h1_1">' . $this->post['title'] . '</h1>' . "\r\n";
     }
 
     private function footer(){
@@ -257,7 +253,7 @@ class IndexService
         foreach ($this->post['video-link'] as $value){
             $src = explode('?v=', $value);
             $this->index .= '<div class="img">
-                <a href="' . $value . '">
+                <a href="' . $value . '" data-fancybox>
                     <img src="https://i.ytimg.com/vi/' . $src[1] . '/hqdefault.jpg" alt="">
                     <span class="play"><img src="/play.png" alt=""></span>
                 </a>
@@ -267,7 +263,7 @@ class IndexService
     }
     private function gallery_block(){
         if(empty($this->files['img']['name'][0])) return;
-        $this->index .= '<div id="h1_3"  class="gallery block">' . "\r\n";
+        $this->index .= '<div id="h1_3" class="gallery block" data-fancybox>' . "\r\n";
         foreach ($this->files['img']['name'] as $key => $value){
             Storage::disk('public')->put('site/images/' . basename($value), file_get_contents($this->files['img']['tmp_name'][$key]));
             $this->index .= '<div class="img">
