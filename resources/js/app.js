@@ -142,10 +142,11 @@ function attribute_remove(x)
     let number = $(x).closest('.product-item').attr('data-number');
     let add = $('.product-item[data-number='+ number +'] .add-attribute');
     $('.product-item[data-number='+ number +'] .attribute-wrap input:last').remove();
+    $('.product-item[data-number='+ number +'] .attribute-wrap input:last').remove();
 
     let count_attribute = $('.product-item[data-number='+ number +'] .attribute-wrap input').length;
-    if(count_attribute === 1) $(x).addClass('disabled')
-    if(count_attribute === 3) add.removeClass('disabled')
+    if(count_attribute === 2) $(x).addClass('disabled')
+    if(count_attribute === 6) add.removeClass('disabled')
 }
 
 function attribute_add(x)
@@ -153,10 +154,11 @@ function attribute_add(x)
 
     let number = $(x).closest('.product-item').attr('data-number');
     let count_attribute = $('.product-item[data-number='+ number +'] .attribute-wrap input').length;
-    if(count_attribute === 3) $(x).addClass('disabled')
+    if(count_attribute === 6) $(x).addClass('disabled')
     let table = $('.product-item[data-number='+ number +'] .attribute-wrap');
     let remove = $('.product-item[data-number='+ number +'] .remove-attribute');
-    table.append('<input type="text" name="product-attribute[product-'+ number +'][]">');
+    table.append('<input type="text" name="product-attribute[product-'+ number +'][]">' +
+        '<input type="text" name="product-attribute-value[product-'+ number +'][]">');
     if(remove.hasClass('disabled')){
         remove.removeClass('disabled');
     }
@@ -214,6 +216,7 @@ function attribute_add(x)
             '                                <div class="input-name">Характеристики</div>\n' +
             '                                <div class="attribute-wrap" >\n' +
             '                                    <input type="text" name="product-attribute[product-' +(count + 1) + '][]">\n' +
+            '                                    <input type="text" name="product-attribute-value[product-'+ (count + 1) +'][]">'   +
             '                                </div>\n' +
             '                                <div class="add-row">\n' +
             '                                    <div class="add add-attribute">+</div>\n' +
@@ -303,8 +306,7 @@ function attribute_add(x)
     })
 
     let add = $('#video-block .add-video'),
-        remove = $('#video-block .remove-video'),
-        table = $('#video-block .video-table')
+        remove = $('#video-block .remove-video')
 
     add.click(function (){
         let count = $('#video-block .video-table .video-item').length;

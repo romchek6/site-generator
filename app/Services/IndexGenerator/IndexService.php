@@ -28,6 +28,7 @@ class IndexService
 
         $this->post = $Post;
         $this->files = $Files;
+
         $this->header();
         foreach($this->post as $key => $value){
             if(array_search($key, $blockArray) !== false){
@@ -326,9 +327,8 @@ class IndexService
                     <div class="title"><a href="' . (isset($link[1])?$link[1]:'#') . '">' . $link[0] . '</a></div>
                     <div class="attributes">' . "\r\n";
 
-                    foreach ($this->post['product-attribute']['product-'.$key + 1] as $item){
-                        $attr = explode('|' , $item);
-                        $this->index .= '<div class="attribute"><span>'. $attr[0] .':</span><span>'. $attr[1] .'</span></div>' . "\r\n";
+                    foreach ($this->post['product-attribute']['product-'.$key + 1] as $i => $item){
+                        $this->index .= '<div class="attribute"><span>'. $item .':</span><span>'. $this->post['product-attribute-value']['product-'.$key + 1][$i] .'</span></div>' . "\r\n";
                     }
 
 

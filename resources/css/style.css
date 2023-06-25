@@ -420,6 +420,9 @@ header .inner-header .logo{
 .note-editable{
     min-height: 300px;
 }
+.attribute-wrap input{
+    width: 50%!important;
+}
 
 
 

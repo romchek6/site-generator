@@ -159,6 +159,7 @@
                                 <div class="input-name">Характеристики</div>
                                 <div class="attribute-wrap">
                                     <input type="text" name="product-attribute[product-1][]">
+                                    <input type="text" name="product-attribute-value[product-1][]">
                                 </div>
                                 <div class="add-row">
                                     <div class="add add-attribute">+</div>
