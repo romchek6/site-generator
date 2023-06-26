@@ -141,8 +141,6 @@
                     <input type="hidden" name="product_block">
                     <div class="block-title">Товары</div>
                     <div class="text-about">
-                        Характеристики записываются (НАЗВАНИЕ)|(ЗНАЧЕНИЕ)
-                        <br>
                         Если нужно добавить в название ссылку используй запись (НАЗВАНИЕ)|(ССЫЛКА)
                     </div>
                     <div class="product-table">

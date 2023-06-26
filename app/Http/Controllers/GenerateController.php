@@ -33,7 +33,6 @@ class GenerateController extends BaseController
         Storage::disk('public')->deleteDirectory('site/images');
         Storage::disk('public')->put('site/images/1.txt', 'images create');
         Storage::disk('public')->delete('generated-site.zip');
-        Storage::disk('public')->delete('site/images.zip');
     }
 
 }

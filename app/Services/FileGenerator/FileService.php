@@ -22,18 +22,15 @@ class FileService
     {
         $zip = new ZipArchive();
         $fileName = 'storage/generated-site.zip';
-        if($zip->open('storage/site/images.zip', ZipArchive::CREATE)){
-            $files = File::files(public_path('storage/site/images'));
-            foreach ($files as $file){
-                $nameInZipFile = basename($file);
-                $zip->addFile($file, $nameInZipFile);
-            }
-            $zip->close();
-        }
         if($zip->open($fileName, ZipArchive::CREATE)){
             $files = File::files(public_path('storage/site'));
+            $images = File::files(public_path('storage/site/images'));
+            $zip->addEmptyDir('images');
+            foreach ($images as $image){
+                $nameInZipFile = basename($image);
+                $zip->addFile($image, 'images/' . $nameInZipFile);
+            }
             foreach ($files as $file){
-                $arr[] = $file;
                 $nameInZipFile = basename($file);
                 $zip->addFile($file, $nameInZipFile);
             }
