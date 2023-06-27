@@ -78,6 +78,9 @@
                 <div class="block sortable" id="company-table-block">
                     <input type="hidden" name="company_table_block">
                     <div class="block-title">Таблица с компаниями</div>
+                    <div class="text-about">
+                        Если нужно сделать сайт ссылкой используй запись сайт|+
+                    </div>
                     <div class="table">
                         <div class="header-table">Название компании</div>
                         <div class="header-table">Рейтинг</div>

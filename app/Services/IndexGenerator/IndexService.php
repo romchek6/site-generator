@@ -28,7 +28,7 @@ class IndexService
 
         $this->post = $Post;
         $this->files = $Files;
-
+        dd($this->post);
         $this->header();
         foreach($this->post as $key => $value){
             if(array_search($key, $blockArray) !== false){
@@ -102,6 +102,8 @@ class IndexService
         ];
         foreach($this->post['breadcrumbs'] as $key => $item){
 
+            if(empty($item)) continue;
+
             $string .= '{
                 "@type": "ListItem",
                 "position": ' . $key + 1 . ',
@@ -129,6 +131,7 @@ class IndexService
         $string = '';
         $count = count($this->post['question']);
         foreach($this->post['question'] as $key => $item){
+            if(empty($item)) continue;
             $string .= '{
                   "@type": "Question",
                   "name": "' . $item . '",
@@ -175,6 +178,10 @@ class IndexService
 
         foreach ($this->post['title-company'] as $key => $value){
 
+            if(empty($value)) continue;
+
+            $link = explode('|', $this->post['link-company'][$key]);
+
             $this->index .= '<div class="row">
                     <div itemprop="aggregateRating" itemtype="https://schema.org/AggregateRating" itemscope>
                         <meta itemprop="reviewCount" content="98" />
@@ -197,7 +204,7 @@ class IndexService
                             </div>
                         </div>
                     </div>
-                    <div class="column w-33"><a href="' . $this->post['link-company'][$key] . '">' . $this->post['link-company'][$key] . '</a></div>
+                    <div class="column w-33"><a href="' . (isset($link[1])? $this->post['link-company'][$key] : '#') . '">' . $this->post['link-company'][$key] . '</a></div>
                 </div>' . "\r\n";
 
         }
@@ -211,6 +218,7 @@ class IndexService
         $this->index .= '<div id="h1_4"  class="block data">
                             <div class="table">'. "\r\n";
         foreach ($this->post['name-data-company'] as $key => $value){
+            if(empty($value)) continue;
             $this->index.='<div class="row">
                                 <div class="column w-50">' . $value . '</div>
                                 <div class="column w-50">' . $this->post['value-data-company'][$key] . '</div>
@@ -225,6 +233,7 @@ class IndexService
         $this->index .= '<div id="h1_5"  class="faq block">
             <div id="accordion" class="accordion" style="margin: 1rem auto">' . "\r\n";
         foreach ($this->post['question'] as $key => $value){
+            if(empty($value)) continue;
             $this->index .= '<div class="accordion__item">
                     <div class="accordion__header">
                         ' . $value . '
@@ -234,7 +243,7 @@ class IndexService
                         ' . $this->post['response'][$key] . '
                         </div>
                     </div>
-                </div>'. "\r\n";
+                </div>' . "\r\n";
         }
         $this->index .= '</div>
                       </div>' . "\r\n";
@@ -244,7 +253,8 @@ class IndexService
         $regions = explode('|', $this->post['regions']);
         $this->index .= '<div class="regions block">' . "\r\n";
         foreach ($regions as $value){
-            $this->index .= '<div>'. $value .'</div>' . "\r\n";
+            if(empty($value)) continue;
+            $this->index .= '<div>' . $value . '</div>' . "\r\n";
         }
         $this->index .= '</div>' . "\r\n";
     }
@@ -252,6 +262,7 @@ class IndexService
         if(empty($this->post['video-link'][0])) return;
         $this->index .= '<div class="video block">' . "\r\n";
         foreach ($this->post['video-link'] as $value){
+            if(empty($value)) continue;
             $src = explode('?v=', $value);
             $this->index .= '<div class="img">
                 <a href="' . $value . '" data-fancybox>
@@ -266,6 +277,7 @@ class IndexService
         if(empty($this->files['img']['name'][0])) return;
         $this->index .= '<div id="h1_3" class="gallery block" data-fancybox>' . "\r\n";
         foreach ($this->files['img']['name'] as $key => $value){
+            if(empty($value)) continue;
             Storage::disk('public')->put('site/images/' . basename($value), file_get_contents($this->files['img']['tmp_name'][$key]));
             $this->index .= '<div class="img">
                                 <img src="/images/' . $value . '" alt="">
@@ -278,7 +290,7 @@ class IndexService
         $this->index .= '<div class="reviews block">
             <div class="wrap">' . "\r\n";
         foreach ($this->post['reviews-name'] as $key => $value){
-
+            if(empty($value)) continue;
             Storage::disk('public')->put('site/images/' . basename($this->files['reviews-img']['name'][$key]), file_get_contents($this->files['reviews-img']['tmp_name'][$key]));
 
             $link = explode('|' , $value);
@@ -316,7 +328,7 @@ class IndexService
         $this->index .= '<div class="block product">
             <div class="wrap">' . "\r\n";
         foreach ($this->post['product-name'] as $key => $value){
-
+            if(empty($value)) continue;
             Storage::disk('public')->put('site/images/' . basename($this->files['product-img']['name'][$key]), file_get_contents($this->files['product-img']['tmp_name'][$key]));
 
             $link = explode('|' , $value);
@@ -328,6 +340,7 @@ class IndexService
                     <div class="attributes">' . "\r\n";
 
                     foreach ($this->post['product-attribute']['product-'.$key + 1] as $i => $item){
+                        if(empty($item)) continue;
                         $this->index .= '<div class="attribute"><span>'. $item .':</span><span>'. $this->post['product-attribute-value']['product-'.$key + 1][$i] .'</span></div>' . "\r\n";
                     }
 
