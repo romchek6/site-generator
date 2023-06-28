@@ -5,6 +5,7 @@ import '../css/app.css';
 $( function() {
     $( "#sortable" ).sortable({
         items: 'div.sortable',
+        handle: ".block-title"
     });
 });
 
@@ -67,26 +68,22 @@ function handleFileSelect(evt) {
 }
 document.getElementById('img').addEventListener('change', handleFileSelect, false);
 
+$('body').on('click', '.delete-item', function (){
+    $(this).closest('.input').remove();
+});
+
 (function company_table()
 {
     let table = $('#company-table-block .table');
-    let remove = $('#company-table-block .add-row .remove');
     let add = $('#company-table-block .add-row .add');
 
     add.click(function (){
-        table.append('<input type="text" class="cell" name="title-company[]">');
-        table.append('<input type="text" class="cell" name="rating-company[]">');
-        table.append('<input type="text" class="cell" name="link-company[]">');
-        if(remove.hasClass('disabled')){
-            remove.removeClass('disabled');
-        }
-    });
-
-    remove.click(function (){
-        $('#company-table-block .table .cell:nth-last-child(-n+3)').remove();
-        if($('#company-table-block .table .cell').length === 3){
-            remove.addClass('disabled');
-        }
+        table.append('<div class="input">\n' +
+            '                            <input type="text" class="cell" name="title-company[]">\n' +
+            '                            <input type="text" class="cell" name="rating-company[]">\n' +
+            '                            <input type="text" class="cell" name="link-company[]">\n' +
+            '                            <div class="delete-item">+</div>\n' +
+            '                        </div>');
     });
 
 })();
@@ -94,45 +91,32 @@ document.getElementById('img').addEventListener('change', handleFileSelect, fals
 (function data_table()
 {
     let table = $('#data-table-block .table');
-    let remove = $('#data-table-block .add-row .remove');
     let add = $('#data-table-block .add-row .add');
 
     add.click(function (){
-        table.append('<input type="text" class="cell" name="name-data-company[]">');
-        table.append('<textarea class="cell" style="height: 32px" name="value-data-company[]"></textarea>');
-        if(remove.hasClass('disabled')){
-            remove.removeClass('disabled');
-        }
+        table.append('<div class="input">\n' +
+            '                            <input type="text" class="cell" name="name-data-company[]">\n' +
+            '                            <textarea class="cell" style="height: 32px" name="value-data-company[]"></textarea>\n' +
+            '                            <div class="delete-item no_rotate">-</div>\n' +
+            '                        </div>');
+
     });
 
-    remove.click(function (){
-        $('#data-table-block .table .cell:nth-last-child(-n+2)').remove();
-        if($('#data-table-block .table .cell').length === 2){
-            remove.addClass('disabled');
-        }
-    });
 
 })();
 
 (function faq_table()
 {
     let table = $('#faq-block .table');
-    let remove = $('#faq-block .add-row .remove');
     let add = $('#faq-block .add-row .add');
 
     add.click(function (){
-        table.append('<input type="text" class="cell" name="question[]">');
-        table.append('<textarea class="cell" style="height: 32px" name="response[]"></textarea>');
-        if(remove.hasClass('disabled')){
-            remove.removeClass('disabled');
-        }
-    });
+        table.append('<div class="input">\n' +
+            '                            <input type="text" class="cell" name="question[]">\n' +
+            '                            <textarea class="cell" style="height: 32px" name="response[]"></textarea>\n' +
+            '                            <div class="delete-item no_rotate">-</div>\n' +
+            '                        </div>');
 
-    remove.click(function (){
-        $('#faq-block .table .cell:nth-last-child(-n+2)').remove();
-        if($('#faq-block .table .cell').length === 2){
-            remove.addClass('disabled');
-        }
     });
 
 })();
@@ -275,24 +259,20 @@ function attribute_add(x)
 })();
 
 (function breadcrumbs(){
+    let i = 1;
     $('#head-block .add').click(function (){
         $('.breadcrumbs-wrap').append('<div class="input breadcrumbs-item">\n' +
-            '                                <input name="breadcrumbs[]" id="breadcrumbs">\n' +
+            '                                <input name="breadcrumbs[] jopa'+ i++ +'" id="breadcrumbs">\n' +
+            '                                <div class="delete-item">+</div>\n' +
             '                            </div>');
-        if($('#head-block .remove').hasClass('disabled')){
-            $('#head-block .remove').removeClass('disabled');
-        }
         if($('.breadcrumbs-item').length > 4){
             $('#head-block .add').addClass('disabled');
         }
     });
-    $('#head-block .remove').click(function (){
-        $('.breadcrumbs-item:last-child').remove();
+    $('body').on('click', '#head-block .delete-item' , function (){
+        $(this).closest('.input').remove();
         if($('#head-block .add').hasClass('disabled')){
             $('#head-block .add').removeClass('disabled');
-        }
-        if($('.breadcrumbs-item').length == 1){
-            $('#head-block .remove').addClass('disabled');
         }
     });
 

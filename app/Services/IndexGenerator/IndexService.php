@@ -28,7 +28,7 @@ class IndexService
 
         $this->post = $Post;
         $this->files = $Files;
-        dd($this->post);
+
         $this->header();
         foreach($this->post as $key => $value){
             if(array_search($key, $blockArray) !== false){
@@ -88,7 +88,7 @@ class IndexService
 
     private function breadcrumbs(){
 
-        if($this->post['breadcrumbs'][0] == '') return;
+        if(empty($this->post['breadcrumbs'][0])) return;
         $count = count($this->post['breadcrumbs']);
         $string = '';
         $hrefArr = [

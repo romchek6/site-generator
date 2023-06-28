@@ -55,11 +55,12 @@
                             <label for="breadcrumbs">Хлебные крошки</label>
                             <div class="input breadcrumbs-item">
                                 <input name="breadcrumbs[]" id="breadcrumbs">
+                                <div class="delete-item">+</div>
+{{--                                <div class="add-item">+</div>--}}
                             </div>
                         </div>
                         <div class="add-row">
                             <div class="add">+</div>
-                            <div class="remove disabled">-</div>
                         </div>
                     </div>
                 </div>
@@ -85,13 +86,15 @@
                         <div class="header-table">Название компании</div>
                         <div class="header-table">Рейтинг</div>
                         <div class="header-table">Сайт</div>
-                        <input type="text" class="cell" name="title-company[]">
-                        <input type="text" class="cell" name="rating-company[]">
-                        <input type="text" class="cell" name="link-company[]">
+                        <div class="input">
+                            <input type="text" class="cell" name="title-company[]">
+                            <input type="text" class="cell" name="rating-company[]">
+                            <input type="text" class="cell" name="link-company[]">
+                            <div class="delete-item">+</div>
+                        </div>
                     </div>
                     <div class="add-row">
                         <div class="add">+</div>
-                        <div class="remove disabled">-</div>
                     </div>
                 </div>
                 <div class="block sortable" id="gallery-block">
@@ -118,12 +121,14 @@
                     <div class="table">
                         <div class="header-table">Название</div>
                         <div class="header-table">Описание</div>
-                        <input type="text" class="cell" name="name-data-company[]">
-                        <textarea class="cell" style="height: 32px" name="value-data-company[]"></textarea>
+                        <div class="input">
+                            <input type="text" class="cell" name="name-data-company[]">
+                            <textarea class="cell" style="height: 32px" name="value-data-company[]"></textarea>
+                            <div class="delete-item no_rotate">-</div>
+                        </div>
                     </div>
                     <div class="add-row">
                         <div class="add">+</div>
-                        <div class="remove disabled">-</div>
                     </div>
                 </div>
                 <div class="block sortable" id="faq-block">
@@ -132,8 +137,11 @@
                     <div class="table">
                         <div class="header-table">Вопрос</div>
                         <div class="header-table">Ответ</div>
-                        <input type="text" class="cell" name="question[]">
-                        <textarea class="cell" style="height: 32px" name="response[]"></textarea>
+                        <div class="input">
+                            <input type="text" class="cell" name="question[]">
+                            <textarea class="cell" style="height: 32px" name="response[]"></textarea>
+                            <div class="delete-item no_rotate">-</div>
+                        </div>
                     </div>
                     <div class="add-row">
                         <div class="add">+</div>
