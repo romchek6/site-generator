@@ -28,7 +28,6 @@ class IndexService
 
         $this->post = $Post;
         $this->files = $Files;
-
         $this->header();
         foreach($this->post as $key => $value){
             if(array_search($key, $blockArray) !== false){
@@ -127,7 +126,7 @@ class IndexService
 
     private function faq()
     {
-        if($this->post['question'][0] == '' && $this->post['response'][0] == '') return;
+        if(empty($this->post['question'][0]) && empty($this->post['response'][0])) return;
         $string = '';
         $count = count($this->post['question']);
         foreach($this->post['question'] as $key => $item){
@@ -229,7 +228,7 @@ class IndexService
     }
 
     private function faq_block(){
-        if($this->post['question'][0] == '' && $this->post['response'][0] == '') return;
+        if(empty($this->post['question'][0]) && empty($this->post['response'][0])) return;
         $this->index .= '<div id="h1_5"  class="faq block">
             <div id="accordion" class="accordion" style="margin: 1rem auto">' . "\r\n";
         foreach ($this->post['question'] as $key => $value){
@@ -339,9 +338,9 @@ class IndexService
                     <div class="title"><a href="' . (isset($link[1])?$link[1]:'#') . '">' . $link[0] . '</a></div>
                     <div class="attributes">' . "\r\n";
 
-                    foreach ($this->post['product-attribute']['product-'.$key + 1] as $i => $item){
+                    foreach ($this->post['product-attribute']['product-'.$this->post['key'][$key]] as $i => $item){
                         if(empty($item)) continue;
-                        $this->index .= '<div class="attribute"><span>'. $item .':</span><span>'. $this->post['product-attribute-value']['product-'.$key + 1][$i] .'</span></div>' . "\r\n";
+                        $this->index .= '<div class="attribute"><span>'. $item .':</span><span>'. $this->post['product-attribute-value']['product-'.$this->post['key'][$key]][$i] .'</span></div>' . "\r\n";
                     }
 
 

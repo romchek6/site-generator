@@ -21,6 +21,13 @@ textarea{
     width: 100%;
     height: 100%;
 }
+.width-important{
+    max-width: 1480px!important;
+    width: 100% !important;
+}
+.height-important{
+
+}
 header{
     height: 100px;
     color: white;
@@ -49,6 +56,31 @@ header .inner-header .logo{
     width: 20px;
     background-color: black;
     cursor: pointer;
+}
+#breadcrumbs{
+    border: 1px solid black;
+}
+.w-full .block{
+    border-bottom: revert;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-color: rgb(209 213 219 / var(--tw-border-opacity));;
+}
+.no_style{
+    display: flex!important;
+}
+.no_style div{
+    font-size: 18px;
+}
+.no_style .block{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-bottom: revert!important;
+    font-size: 17px;
 }
 .flex-row{
     display: flex;
@@ -343,6 +375,7 @@ header .inner-header .logo{
     display: flex;
     flex-direction: column;
     width: calc(33% - 4px);
+    position: relative;
 }
 #video-block .video-table .video-item .video-img{
     width: 100%;
@@ -448,8 +481,52 @@ header .inner-header .logo{
     cursor: pointer;
     user-select: none;
 }
-.no_rotate{
+.delete-item2
+{
+    position: absolute;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    background-color: red;
+    z-index: 1;
+    right: 10px;
+    top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: white;
+    transform: rotate(45deg);
+    cursor: pointer;
+    user-select: none;
+}
+.no_rotate
+{
     transform: none!important;
+}
+.reviews-item .delete-item2
+{
+    top: 180px;
+}
+.product-item .delete-item2
+{
+    top: 175px;
+}
+.domain{
+
+}
+.domain div{
+    align-items: center;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    padding: 20px;
+    font-size: 22px;
+    cursor: pointer;
+    background-color: #cbcbcb;
+}
+.domain div:hover{
+    background-color: #9a9a9a;
 }
 /*.add-item{*/
 /*    position: absolute;*/
