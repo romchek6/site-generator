@@ -513,9 +513,9 @@ header .inner-header .logo{
     top: 175px;
 }
 .domain{
-
+  position: relative;
 }
-.domain div{
+.domain .inner-domain{
     align-items: center;
     display: flex;
     height: 50px;
@@ -523,9 +523,13 @@ header .inner-header .logo{
     padding: 20px;
     font-size: 22px;
     cursor: pointer;
-    background-color: #cbcbcb;
+    background-color: #efefef;;
 }
-.domain div:hover{
+.delete-domain:hover{
+    text-decoration: none;
+    color: white;
+}
+.domain .inner-domain:hover{
     background-color: #9a9a9a;
 }
 /*.add-item{*/

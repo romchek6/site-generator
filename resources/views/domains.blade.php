@@ -21,12 +21,12 @@
         <div class="flex-row">
             <div class="left">
                 <div class="block">
-                    <form action="/domain/add" method="POST" class="form" enctype="multipart/form-data">
+                    <form action="/domains/add" method="POST" class="form" enctype="multipart/form-data">
                         @csrf
                         <div  class="input-block">
                             <label for="domain">Введите домен</label>
                             <div class="input">
-                                <input type="text" id="domain">
+                                <input type="text" name="domain_name" id="domain">
                             </div>
                         </div>
                         <button class="btn btn-success" type="submit">
@@ -36,18 +36,20 @@
                 </div>
                 <div class="block">
                     <div class="domains-columns">
-                        <a class="domain">
-                            <div>mdsk-dom.ru</div>
-                        </a>
-                        <a class="domain">
-                            <div>mdsk-dom.ru</div>
-                        </a>
-                        <a class="domain">
-                            <div>mdsk-dom.ru</div>
-                        </a>
-                        <a class="domain">
-                            <div>mdsk-dom.ru</div>
-                        </a>
+                        @foreach($domains as $domain)
+                        <div style="position: relative;" >
+                            <a href="/dashboard/<?= $domain['id'] ?>" class="domain">
+                                <div class="inner-domain"><?= $domain['name'] ?></div>
+
+                            </a>
+                            <form action="/domains/remove/<?= $domain['id'] ?>" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"  class="delete-item delete-domain">+</button>
+                            </form>
+                        </div>
+
+                        @endforeach
                     </div>
                 </div>
             </div>
