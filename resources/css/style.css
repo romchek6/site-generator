@@ -532,6 +532,17 @@ header .inner-header .logo{
 .domain .inner-domain:hover{
     background-color: #9a9a9a;
 }
+.update{
+    top: 100px;
+    position: fixed;
+    right: 0;
+    width: 100px;
+    height: 40px;
+    background: green;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
 /*.add-item{*/
 /*    position: absolute;*/
 /*    border-radius: 50%;*/

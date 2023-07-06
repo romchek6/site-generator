@@ -16,10 +16,13 @@
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100">
     @include('layouts.navigation')
-    <div id="base">
+    <div id="base" style="position: relative">
+        <form action="/site/<?= $id ?>" method="POST" >
+            @csrf
+            @method('PUT')
+            <div class="update" ><button type="submit">Обновить</button></div>
         <div class="container">
             <form action="/generate" method="POST" class="form" enctype="multipart/form-data">
-                @csrf
                 <div class="flex-row">
                     <div class="left" id="sortable">
                         <div class="block" id="head-block">
@@ -28,27 +31,29 @@
                                 <div class="input-block">
                                     <label for="domain">Домен</label>
                                     <div class="input">
-                                        <input type="text" name="domain" id="domain">
+                                        <input type="text" value="<?= $post->domain ?>" name="domain" id="domain">
                                     </div>
                                 </div>
                                 <div class="input-block">
                                     <label for="title">Title</label>
                                     <div class="input">
-                                        <input type="text" name="title" id="title">
+                                        <input type="text" value="<?= $post->title ?>" name="title" id="title">
                                     </div>
                                 </div>
                                 <div class="input-block">
                                     <label for="description">Description</label>
                                     <div class="input">
-                                        <textarea class="text-editor" name="description" id="description"></textarea>
+                                        <textarea class="text-editor" name="description" id="description"><?= $post->description ?></textarea>
                                     </div>
                                 </div>
                                 <div class="input-block breadcrumbs-wrap">
                                     <label for="breadcrumbs">Хлебные крошки</label>
+                                    <?php foreach ($post->breadcrumbs as $item): ?>
                                     <div class="input breadcrumbs-item">
-                                        <input name="breadcrumbs[]" id="breadcrumbs">
+                                        <input name="breadcrumbs[]" value="<?= $item ?>" id="breadcrumbs">
                                         <div class="delete-item">+</div>
                                     </div>
+                                    <?php endforeach; ?>
                                 </div>
                                 <div class="add-row">
                                     <div class="add">+</div>
@@ -62,7 +67,7 @@
                                 <div class="input-block">
                                     <label for="text">Текст</label>
                                     <div class="input">
-                                        <textarea class="text-editor"  name="text" id="text"></textarea>
+                                        <textarea class="text-editor"  name="text" id="text"><?= $post->text ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -77,12 +82,14 @@
                                 <div class="header-table">Название компании</div>
                                 <div class="header-table">Рейтинг</div>
                                 <div class="header-table">Сайт</div>
-                                <div class="input">
-                                    <input type="text" class="cell" name="title-company[]">
-                                    <input type="text" class="cell" name="rating-company[]">
-                                    <input type="text" class="cell" name="link-company[]">
-                                    <div class="delete-item">+</div>
-                                </div>
+                                @foreach($post->title_company as $key => $item)
+                                    <div class="input">
+                                        <input type="text" class="cell" value="<?= $item ?>" name="title_company[]">
+                                        <input type="text" class="cell" value="<?= $post->rating_company[$key] ?>" name="rating_company[]">
+                                        <input type="text" class="cell" value="<?= $post->link_company[$key] ?>" name="link_company[]">
+                                        <div class="delete-item">+</div>
+                                    </div>
+                                @endforeach
                             </div>
                             <div class="add-row">
                                 <div class="add">+</div>
@@ -101,7 +108,7 @@
                                 <div class="input-block">
                                     <label for="text2">Текст</label>
                                     <div class="input">
-                                        <textarea class="text-editor" name="text2" id="text2"></textarea>
+                                        <textarea class="text-editor" name="text2" id="text2"><?= $post->text2 ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -112,11 +119,14 @@
                             <div class="table">
                                 <div class="header-table">Название</div>
                                 <div class="header-table">Описание</div>
+                                @foreach($post->name_data_company as $key => $value)
+
                                 <div class="input">
-                                    <input type="text" class="cell" name="name-data-company[]">
-                                    <textarea class="cell" style="height: 32px" name="value-data-company[]"></textarea>
+                                    <input type="text" class="cell" value="<?= $value ?>" name="name_data_company[]">
+                                    <textarea class="cell" style="height: 32px" name="value_data_company[]"><?= $post->value_data_company[$key] ?></textarea>
                                     <div class="delete-item no_rotate">-</div>
                                 </div>
+                                @endforeach
                             </div>
                             <div class="add-row">
                                 <div class="add">+</div>
@@ -264,6 +274,7 @@
 
             </form>
         </div>
+        </form>
     </div>
 </div>
 </body>

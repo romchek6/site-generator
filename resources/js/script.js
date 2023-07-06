@@ -8,7 +8,10 @@ $( function() {
 $(document).ready(function() {
     $('.text-editor').summernote();
 });
-
+$('body').on('click', '.update button', function (e){
+    // e.preventDefault();
+    // $('input[name="post"]').val($('.form').serialize())
+});
 // $('form').on('submit', function (e){
 //     e.preventDefault();
 //
@@ -74,9 +77,9 @@ $('body').on('click', '.delete-item', function (){
 
     add.click(function (){
         table.append('<div class="input">\n' +
-            '                            <input type="text" class="cell" name="title-company[]">\n' +
-            '                            <input type="text" class="cell" name="rating-company[]">\n' +
-            '                            <input type="text" class="cell" name="link-company[]">\n' +
+            '                            <input type="text" class="cell" name="title_company[]">\n' +
+            '                            <input type="text" class="cell" name="rating_company[]">\n' +
+            '                            <input type="text" class="cell" name="link_company[]">\n' +
             '                            <div class="delete-item">+</div>\n' +
             '                        </div>');
     });
@@ -90,8 +93,8 @@ $('body').on('click', '.delete-item', function (){
 
     add.click(function (){
         table.append('<div class="input">\n' +
-            '                            <input type="text" class="cell" name="name-data-company[]">\n' +
-            '                            <textarea class="cell" style="height: 32px" name="value-data-company[]"></textarea>\n' +
+            '                            <input type="text" class="cell" name="name_data_company[]">\n' +
+            '                            <textarea class="cell" style="height: 32px" name="value_data_company[]"></textarea>\n' +
             '                            <div class="delete-item no_rotate">-</div>\n' +
             '                        </div>');
 

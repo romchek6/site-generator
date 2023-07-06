@@ -21,7 +21,7 @@
         <div class="flex-row">
             <div class="left">
                 <div class="block">
-                    <form action="/domains/add" method="POST" class="form" enctype="multipart/form-data">
+                    <form action="/domain" method="POST" class="form" enctype="multipart/form-data">
                         @csrf
                         <div  class="input-block">
                             <label for="domain">Введите домен</label>
@@ -38,11 +38,11 @@
                     <div class="domains-columns">
                         @foreach($domains as $domain)
                         <div style="position: relative;" >
-                            <a href="/dashboard/<?= $domain['id'] ?>" class="domain">
+                            <a href="/site/<?= $domain['id'] ?>" class="domain">
                                 <div class="inner-domain"><?= $domain['name'] ?></div>
 
                             </a>
-                            <form action="/domains/remove/<?= $domain['id'] ?>" method="POST">
+                            <form action="/domain/<?= $domain['id'] ?>" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"  class="delete-item delete-domain">+</button>

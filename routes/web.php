@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GenerateController;
 use App\Http\Controllers\DomainController;
@@ -20,11 +21,9 @@ Route::get('/', function () {
     return redirect('/login');
 });
 Route::middleware('auth')->group(function () {
-    Route::get('/domains', [DomainController::class, 'show'])->name('domains');
+    Route::resource('/domain', DomainController::class);
+    Route::resource('/site', SiteController::class);
     Route::post('/generate', [GenerateController::class, 'generate'])->name('generate');
-    Route::post('/domains/add', [DomainController::class, 'store'])->name('domains_add');
-    Route::delete('/domains/remove/{id}', [DomainController::class, 'destroy'])->name('domains_remove');
-    Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
 });
 
 Route::middleware('auth')->group(function () {
