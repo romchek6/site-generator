@@ -17,7 +17,7 @@ class MetaValue extends Model
         MetaValue::create([
             'domains_id' => $id,
             'name' => 'file',
-            'value' => ''
+            'value' => '{"img":[],"product-img":[],"reviews-img":[]}'
         ]);
     }
 }

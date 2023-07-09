@@ -5,12 +5,10 @@ $( function() {
     });
 });
 
+$('.rounded-md a').attr('href' , '/domain');
+
 $(document).ready(function() {
     $('.text-editor').summernote();
-});
-$('body').on('click', '.update button', function (e){
-    // e.preventDefault();
-    // $('input[name="post"]').val($('.form').serialize())
 });
 // $('form').on('submit', function (e){
 //     e.preventDefault();
@@ -56,10 +54,10 @@ function handleFileSelect(evt) {
             alert("Image only please....");
         }
         var reader = new FileReader();
-        $('.gallery').empty();
+        $('.gallery img[data-new="1"]').remove();
         reader.onload = (function (theFile) {
             return function (e) {
-                $('.gallery').append('<img src="' + e.target.result + '">')
+                $('.gallery').append('<img data-new="1" src="' + e.target.result + '">')
             };
         })(f);
         reader.readAsDataURL(f);
@@ -68,6 +66,26 @@ function handleFileSelect(evt) {
 $('body').on('change', '#img', handleFileSelect)
 $('body').on('click', '.delete-item', function (){
     $(this).closest('.input').remove();
+});
+
+$('body').on('click', '.gallery img[data-delete]', function (){
+    let del = $(this).attr('data-delete');
+    let token = $('input[name="_token"]').val();
+    let id = $('input[name="_id"]').val();
+    let img = $(this);
+    $.ajax({
+        type: 'POST',
+        url: '/deleteImg',
+        data: {
+            "_token": token,
+            'path': del,
+            'id': id,
+        },
+    }).done(function(data) {
+        img.remove();
+    }).fail(function(data) {
+        console.log('Ошибка удаления')
+    });
 });
 
 (function company_table()
@@ -268,6 +286,9 @@ function attribute_add(x)
 
 (function reviews(){
 
+    $('.reviews-img').css('z-index', '3');
+    $('.reviews-logo-input').css('display', 'none');
+
     $('body').on('change', '.reviews-item[data-number] .reviews-logo-input', function () {
         var input = $(this)[0];
         let This = $(this);
@@ -296,28 +317,29 @@ function attribute_add(x)
     })
     let add = $('.add-reviews')
     add.click(function (){
-        let count = $('#reviews-block .reviews-table .reviews-item').length;
-
-        $('#reviews-block .reviews-table .add-row-reviews').before('<div class="reviews-item" data-number="' + (count + 1) + '">\n' +
-            '                            <input type="file" name="reviews-img[]" class="reviews-logo-input">\n' +
+        let last_number = +$('#reviews-block .reviews-table .reviews-item:last').attr('data-number');
+        if (!$('#reviews-block .reviews-table .reviews-item:last')[0]) last_number = 0;
+        $('#reviews-block .reviews-table .add-row-reviews').before('<div class="reviews-item" data-number="' + (last_number + 1) + '">\n' +
+            '                            <input type="hidden" value="' + (last_number + 1) + '" name="review_number[]">\n' +
+            '                            <input type="file" name="reviews_img_' + (last_number + 1) + '" class="reviews-logo-input">\n' +
             '                            <div class="reviews-img" style="z-index: -1">\n' +
             '                                <div class="delete-img"></div>\n' +
             '                            </div>\n' +
             '                            <div class="reviews-title input-block">\n' +
             '                                <div class="input-name">Название</div>\n' +
-            '                                <input type="text" name="reviews-name[]">\n' +
+            '                                <input type="text" name="reviews_name[]">\n' +
             '                            </div>\n' +
             '                            <div class="reviews-rating input-block">\n' +
             '                                <div class="input-name">Рейтинг</div>\n' +
-            '                                <input type="text" name="reviews-rating[]">\n' +
+            '                                <input type="text" name="reviews_rating[]">\n' +
             '                            </div>\n' +
             '                            <div class="count-reviews input-block">\n' +
             '                                <div class="input-name">Количество отзывов</div>\n' +
-            '                                <input type="text" name="count-reviews[]">\n' +
+            '                                <input type="text" name="count_reviews[]">\n' +
             '                            </div>\n' +
             '                            <div class="reviews-text input-block">\n' +
             '                                <div class="input-name">Отзыв</div>\n' +
-            '                                <textarea  name="reviews-text[]"></textarea>\n' +
+            '                                <textarea  name="reviews_text[]"></textarea>\n' +
             '                            </div>\n' +
             '                            <div class="delete-item2">+</div>\n' +
             '                        </div>')
