@@ -13,12 +13,14 @@ class SiteController extends BaseController
 
         $post = MetaValue::where(['domains_id'=> $id, 'name' => 'post'])->get();
         $file = MetaValue::where(['domains_id'=> $id, 'name' => 'file'])->get();
-
+        $name = Domain::where(['id' => $id])->get()[0]->name;
         $post = (array)json_decode($post[0]->value);
         $file = (array)json_decode($file[0]->value);
         $block_position = $this->block_position($post);
         $file['reviews_img'] = (array)$file['reviews_img'];
-        return view('site', compact('post', 'file', 'id', 'block_position'));
+        $file['product_img'] = (array)$file['product_img'];
+
+        return view('site', compact('post', 'file', 'id', 'block_position', 'name'));
     }
 
     public function update($id){
@@ -41,16 +43,27 @@ class SiteController extends BaseController
     {
         if(!empty($files['img']['name'][0])){
             foreach($files['img']['name'] as $key => $value){
-                Storage::disk('public')->put($domen . '/' . basename($value), file_get_contents($files['img']['tmp_name'][$key]));
-                $old_files['img'][] = '/' . $domen .'/' . basename($value);
+                $time = time();
+                Storage::disk('public')->put($domen . '/' . $time . '_' . basename($value), file_get_contents($files['img']['tmp_name'][$key]));
+                $old_files['img'][] = '/' . $domen .'/' . $time . '_' . basename($value);
             }
         }
         $old_files['reviews_img'] = (array)$old_files['reviews_img'];
+        $old_files['product_img'] = (array)$old_files['product_img'];
         foreach($files as $key => $item){
             if(strpos($key, 'reviews_img_') !== false){
                 if(empty($item['name']) ) continue;
-                Storage::disk('public')->put($domen . '/' . basename($item['name']), file_get_contents($item['tmp_name']));
-                $old_files['reviews_img'][$key] = '/' . $domen .'/' . basename($item['name']);
+                $time = time();
+                Storage::disk('public')->put($domen . '/' . $time . '_' . basename($item['name']), file_get_contents($item['tmp_name']));
+                $old_files['reviews_img'][$key] = '/' . $domen .'/' . $time . '_' . basename($item['name']);
+            }
+        }
+        foreach($files as $key => $item){
+            if(strpos($key, 'product_img_') !== false){
+                if(empty($item['name']) ) continue;
+                $time = time();
+                Storage::disk('public')->put($domen . '/' . $time . '_' . basename($item['name']), file_get_contents($item['tmp_name']));
+                $old_files['product_img'][$key] = '/' . $domen .'/' . $time . '_' . basename($item['name']);
             }
         }
         return $old_files;

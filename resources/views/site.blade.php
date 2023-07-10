@@ -22,11 +22,14 @@
             @method('PUT')
             <input type="hidden" name="_id" value="<?= $id ?>">
             <div class="update" ><button type="submit">Обновить</button></div>
+            <div class="update_rar"><a href="/generate/<?= $id ?>">Архив</a></div>
         <div class="container">
-            <form action="/generate" method="POST" class="form" enctype="multipart/form-data">
+
                 <div class="flex-row">
                     <div class="left" id="sortable">
+
                         <div class="block" id="head-block">
+                            <div class="domain_name" style="width: 100%;font-size: 30px;text-align: center;margin-bottom: 50px"><?= $name ?></div>
                             <div class="block-title">Мета теги в &lt;head&gt;</div>
                             <div class="inputs">
                                 <div class="input-block">
@@ -50,7 +53,7 @@
                                 <div class="input-block breadcrumbs-wrap">
                                     <label for="breadcrumbs">Хлебные крошки</label>
                                     @if(!empty($post['breadcrumbs']))
-                                            <?php foreach ($post['breadcrumbs'] as $item): ?>
+                                        <?php foreach ($post['breadcrumbs'] as $item): ?>
                                         <div class="input breadcrumbs-item">
                                             <input name="breadcrumbs[]" value="<?= $item ?>" id="breadcrumbs">
                                             <div class="delete-item">+</div>
@@ -66,10 +69,9 @@
                         @foreach($block_position as $value)
                             @include('blocks.' . $value)
                         @endforeach
-                        <button type="submit" class="submit">Получить архив</button>
+                        <a href="/generate/<?= $id ?>" class="submit">Получить архив</a>
                     </div>
                 </div>
-            </form>
         </div>
         </form>
     </div>

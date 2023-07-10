@@ -15,20 +15,21 @@ class FileService
 
     public function createIndex($index){
         Storage::disk('local')->put('public/site/index.html', $index);
-        $this->createZip();
     }
 
-    private function createZip()
+    public function createZip($domen)
     {
         $zip = new ZipArchive();
         $fileName = 'storage/generated-site.zip';
         if($zip->open($fileName, ZipArchive::CREATE)){
             $files = File::files(public_path('storage/site'));
-            $images = File::files(public_path('storage/site/images'));
+            $images = File::files(public_path('storage/' . $domen));
             $zip->addEmptyDir('images');
-            foreach ($images as $image){
-                $nameInZipFile = basename($image);
-                $zip->addFile($image, 'images/' . $nameInZipFile);
+            if(!empty($images)){
+                foreach ($images as $image){
+                    $nameInZipFile = basename($image);
+                    $zip->addFile($image,  'images/' . $nameInZipFile);
+                }
             }
             foreach ($files as $file){
                 $nameInZipFile = basename($file);

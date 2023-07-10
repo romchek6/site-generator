@@ -5,8 +5,8 @@ $( function() {
     });
 });
 
-$('.rounded-md a').attr('href' , '/domain');
-
+$('.rounded-md > a').attr('href' , '/domain');
+$('.rounded-md > a').text('Домены');
 $(document).ready(function() {
     $('.text-editor').summernote();
 });
@@ -153,11 +153,11 @@ function attribute_add(x)
 {
     let number = x.closest('.product-attribute').children('input[type=hidden]').val();
     let count_attribute = $('.product-item[data-number='+ number +'] .attribute-wrap input').length;
-    if(count_attribute === 6) $(x).addClass('disabled')
+    if(count_attribute >= 6) $(x).addClass('disabled')
     let table = $('.product-item[data-number='+ number +'] .attribute-wrap');
     let remove = $('.product-item[data-number='+ number +'] .remove-attribute');
-    table.append('<input type="text" name="product-attribute[product-'+ number +'][]">' +
-        '<input type="text" name="product-attribute-value[product-'+ number +'][]">');
+    table.append('<input type="text" name="product_attribute[product_'+ number +'][]">' +
+        '<input type="text" name="product_attribute-value[product_'+ number +'][]">');
     if(remove.hasClass('disabled')){
         remove.removeClass('disabled');
     }
@@ -165,7 +165,8 @@ function attribute_add(x)
 
 (function item_product()
 {
-    let i = 1;
+    $('.product-img').css('z-index', '3');
+    $('.product-img-input').css('display', 'none');
 
     $('body').on('click', '.add-attribute', function (){
         attribute_add($(this));
@@ -202,23 +203,24 @@ function attribute_add(x)
     let remove = $('#product-block .add-row .remove-product');
     let add = $('#product-block .add-row .add-product');
     add.click(function (){
-        i++;
+        let i = +$('.product-table .product-item:last').attr('data-number');
+        if (!$('.product-table .product-item:last')[0]) i = 0;
         let count = $('#product-block .product-table .product-item').length;
-        $('.product-table .add-row-product').before('<div class="product-item" data-number="'+ i +'">\n' +
-            '                            <input type="file" name="product-img[]" class="product-img-input img-'+ i +'">\n' +
+        $('.product-table .add-row-product').before('<div class="product-item" data-number="'+ (i + 1) +'">\n' +
+            '                            <input type="file" name="product_img_' + (count + 1) + '" class="product-img-input img-'+ (i + 1) +'">\n' +
             '                            <div class="product-img product-img-' + (count + 1) + '" style="z-index: -1">' +
             '                               <div class="delete-img"></div>\n' +
             '                            </div>\n' +
             '                            <div class="product-title">\n' +
             '                                <div class="input-name">Название</div>\n' +
-            '                                <input type="text" name="product-name[]">\n' +
+            '                                <input type="text" name="product_name[]">\n' +
             '                            </div>\n' +
             '                            <div class="product-attribute">\n' +
-            '                            <input type="hidden" name="key[]" value="' + i + '">\n' +
+            '                            <input type="hidden" name="key[]" value="' + (i + 1) + '">\n' +
             '                                <div class="input-name">Характеристики</div>\n' +
             '                                <div class="attribute-wrap" >\n' +
-            '                                    <input type="text" name="product-attribute[product-' +i + '][]">\n' +
-            '                                    <input type="text" name="product-attribute-value[product-'+ i +'][]">'   +
+            '                                    <input type="text" name="product_attribute[product_' + (i + 1) + '][]">\n' +
+            '                                    <input type="text" name="product_attribute-value[product_'+ (i + 1) +'][]">'   +
             '                                </div>\n' +
             '                                <div class="add-row">\n' +
             '                                    <div class="add add-attribute">+</div>\n' +
@@ -227,7 +229,7 @@ function attribute_add(x)
             '                            </div>\n' +
             '                            <div class="product-price">\n' +
             '                                <div class="input-name">Цена</div>\n' +
-            '                                <input type="text" name="product-price[]">\n' +
+            '                                <input type="text" name="product_price[]">\n' +
             '                            </div>\n' +
             '                            <div class="delete-item2">+</div>\n' +
             '                        </div>');

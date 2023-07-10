@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('/domain', DomainController::class);
     Route::resource('/site', SiteController::class);
-    Route::post('/generate', [GenerateController::class, 'generate'])->name('generate');
+    Route::get('/generate/{id}', [GenerateController::class, 'generate'])->name('generate');
     Route::post('/deleteImg', [SiteController::class, 'deleteImg'])->name('deleteImg');
 });
 

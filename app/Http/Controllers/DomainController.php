@@ -7,6 +7,7 @@ use App\Models\MetaValue;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class DomainController extends BaseController
 {
@@ -27,6 +28,7 @@ class DomainController extends BaseController
         ]);
         $meta = new MetaValue();
         $meta->createEmptyFields($created_domain->id);
+        Storage::disk('local')->put('public/' . $created_domain->name . '/1.txt', 'test');
         return redirect('/domain');
     }
 

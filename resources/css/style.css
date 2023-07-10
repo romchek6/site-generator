@@ -166,6 +166,9 @@ header .inner-header .logo{
 .submit{
     width: 100%;
     height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 20px;
     background-color: #018f01;
     border-radius: 15px;
@@ -173,6 +176,11 @@ header .inner-header .logo{
     cursor: pointer;
     border: 1px solid #014201;
     color: white;
+    text-decoration: none;
+}
+.submit:hover{
+    color: white;
+    text-decoration: none;
 }
 .table{
     display: flex;
@@ -536,12 +544,34 @@ header .inner-header .logo{
     top: 100px;
     position: fixed;
     right: 0;
-    width: 100px;
-    height: 40px;
+    width: 130px;
+    height: 60px;
     background: green;
     color: white;
     display: flex;
     justify-content: center;
+    font-size: 22px;
+}
+.update_rar{
+    top: 200px;
+    position: fixed;
+    right: 0;
+    width: 130px;
+    height: 60px;
+    background: #913613;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}
+.update_rar a{
+    color: white;
+    text-decoration: none;
+}
+.update_rar a:hover{
+    color: white;
+    text-decoration: none;
 }
 /*.add-item{*/
 /*    position: absolute;*/

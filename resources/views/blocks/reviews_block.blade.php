@@ -5,7 +5,7 @@
         Если нужно добавить в название ссылку используй запись (НАЗВАНИЕ)|(ССЫЛКА)
     </div>
     <div class="reviews-table">
-        @if(!empty($post['reviews_name']))
+        @if(!empty($post['reviews_name'][0]))
             @foreach($post['reviews_name'] as $key => $value)
                 <div class="reviews-item" data-number="<?= $post['review_number'][$key] ?>">
                     <input type="hidden" value="<?= $post['review_number'][$key] ?>" name="review_number[]">

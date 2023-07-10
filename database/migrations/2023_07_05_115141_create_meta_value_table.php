@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('meta_value', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('domains_id')->constrained();
+            $table->foreignId('domains_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->text('value');
             $table->timestamps();
